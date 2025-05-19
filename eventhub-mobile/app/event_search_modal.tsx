@@ -1,5 +1,5 @@
 import EventCard from "@/components/EventCard";
-import { ADDRESS_NO_PORT } from "@/constants/address";
+import { SEARCH_BASE_URL } from "@/constants/address";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import { format, parseISO } from "date-fns";
@@ -45,7 +45,7 @@ const ModalScreen = () => {
 
   const search = useCallback(async (text: string) => {
     try {
-      const res = await fetch(`http://${ADDRESS_NO_PORT}:9200/events/_search`, {
+      const res = await fetch(`${SEARCH_BASE_URL}/events/_search`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

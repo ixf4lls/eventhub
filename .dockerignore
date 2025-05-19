@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+**/node_modules
+**/dist
+**/.expo
+**/build
+**/coverage
+*.log
+eventhub-mobile/android/.gradle
+eventhub-mobile/ios/Pods

@@ -16,7 +16,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ADDRESS } from "@/constants/address";
+import { API_BASE_URL } from "@/constants/address";
 import { fetchWithToken } from "@/utils/tokenInterceptor";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Swiper from "react-native-swiper";
@@ -59,7 +59,7 @@ export default function Home() {
         return;
       }
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/events",
+        API_BASE_URL + "/api/events",
         {
           method: "GET",
         },

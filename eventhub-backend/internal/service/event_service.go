@@ -8,12 +8,13 @@ import (
 )
 
 type EventService struct {
-	eventRepo repository.GormEventRepository
-	orgRepo   repository.GormOrganizationRepository
+	eventRepo        repository.GormEventRepository
+	orgRepo          repository.GormOrganizationRepository
+	elasticsearchURL string
 }
 
-func NewEventService(eventRepo repository.GormEventRepository, orgRepo repository.GormOrganizationRepository) *EventService {
-	return &EventService{eventRepo: eventRepo, orgRepo: orgRepo}
+func NewEventService(eventRepo repository.GormEventRepository, orgRepo repository.GormOrganizationRepository, elasticsearchURL string) *EventService {
+	return &EventService{eventRepo: eventRepo, orgRepo: orgRepo, elasticsearchURL: elasticsearchURL}
 }
 
 func (s *EventService) GetAllUser(userID uint) ([]repository.EventResponse, []repository.EventResponse, []repository.EventResponse, error) {
@@ -81,7 +82,7 @@ func (s *EventService) Create(input domain.CreateEventInput, creatorID, orgID ui
 		return err
 	}
 
-	go createEventDocInElastic(event)
+	go createEventDocInElastic(s.elasticsearchURL, event)
 
 	return nil
 }
@@ -156,7 +157,7 @@ func (s *EventService) Update(userID, eventID, orgID uint, input domain.CreateEv
 		return err
 	}
 
-	go createEventDocInElastic(&event)
+	go createEventDocInElastic(s.elasticsearchURL, &event)
 
 	return nil
 }
@@ -173,7 +174,7 @@ func (s *EventService) UpdateSearchIndex() error {
 	}
 
 	for _, event := range events {
-		go createEventDocInElastic(&event)
+		go createEventDocInElastic(s.elasticsearchURL, &event)
 	}
 
 	return nil

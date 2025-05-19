@@ -18,7 +18,7 @@ import { AuthContext } from '../../src/context/AuthContext'
 import { fonts } from '@/constants/fonts'
 import * as Haptics from 'expo-haptics'
 import CustomButton from '@/components/CustomButton'
-import { ADDRESS } from '@/constants/address'
+import { API_BASE_URL } from '@/constants/address'
 
 const SignIn = () => {
   const [first_name, setfirst_name] = useState('')
@@ -56,7 +56,7 @@ const SignIn = () => {
 
     try {
       const response = await fetch(
-        'http://' + ADDRESS + '/api/register',
+        API_BASE_URL + '/api/register',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

@@ -1,6 +1,6 @@
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
-import { ADDRESS } from "@/constants/address";
+import { API_BASE_URL } from "@/constants/address";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import { fetchWithToken } from "@/utils/tokenInterceptor";
@@ -56,7 +56,7 @@ const Organizations = () => {
         return;
       }
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/organizations",
+        API_BASE_URL + "/api/organizations",
         {
           method: "GET",
         },
@@ -91,7 +91,7 @@ const Organizations = () => {
     }
     try {
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/organizations",
+        API_BASE_URL + "/api/organizations",
         {
           method: "POST",
           body: JSON.stringify({ organization_name: tempOrgName }),
@@ -138,8 +138,7 @@ const Organizations = () => {
         return;
       }
       const response = (await fetchWithToken(
-        "http://" +
-          ADDRESS +
+        API_BASE_URL +
           "/api/organizations/join/" +
           tempInviteCode.toUpperCase(),
         {

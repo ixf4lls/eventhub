@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ADDRESS } from '@/constants/address';
+import { API_BASE_URL } from '@/constants/address';
 import { useRouter } from 'expo-router';
 
 let isRefreshing = false;
@@ -25,7 +25,7 @@ const refreshToken = async (): Promise<string> => {
 
   try {
     const response = await fetch(
-      'http://' + ADDRESS + '/api/refresh',
+      API_BASE_URL + '/api/refresh',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -96,4 +96,4 @@ export const fetchWithToken = async (url: string, options: RequestInit = {}): Pr
     console.error('Ошибка в fetchWithToken:', error);
     throw error;
   }
-}; 
+};

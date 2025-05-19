@@ -19,7 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { fetchWithToken } from "@/utils/tokenInterceptor";
-import { ADDRESS } from "@/constants/address";
+import { API_BASE_URL } from "@/constants/address";
 import * as Haptics from "expo-haptics";
 
 type TempEvent = {
@@ -159,7 +159,7 @@ const ModalScreen = () => {
         : null;
 
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/organizations/" + org_id + "/events",
+        API_BASE_URL + "/api/organizations/" + org_id + "/events",
         {
           method: "POST",
           body: JSON.stringify({

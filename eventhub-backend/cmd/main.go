@@ -8,15 +8,16 @@ import (
 	"eventhub-backend/internal/repository"
 	"eventhub-backend/internal/service"
 	customJwt "eventhub-backend/pkg/jwt"
+	"fmt"
 
 	"github.com/labstack/echo/v4"
+	echoMiddleware "github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	db := database.ConnectToDB()
-	database.MigrageDB(db)
-
 	cfg := config.Load()
+	db := database.ConnectToDB(cfg)
+	database.MigrageDB(db)
 
 	var jwtManager customJwt.Manager = customJwt.NewJwtManager(cfg.JwtSecretKey)
 
@@ -30,7 +31,7 @@ func main() {
 	authService := service.NewAuthService(cfg, *userRepo, jwtManager)
 	registerService := service.NewRegisterService(*userRepo)
 	userService := service.NewUserService(*userRepo)
-	eventService := service.NewEventService(*eventRepo, *organizationRepo)
+	eventService := service.NewEventService(*eventRepo, *organizationRepo, cfg.ElasticsearchURL)
 	organizationService := service.NewOrganizationService(*organizationRepo)
 	notificationService := service.NewNotificationService(*notificationRepo, *eventRepo)
 
@@ -45,6 +46,7 @@ func main() {
 	authMW := middleware.NewMiddleware(jwtManager)
 
 	e := echo.New()
+	e.Use(echoMiddleware.CORS())
 	e.POST("/reindex", eventHandler.UpdateSearchIndex) // POST /reindex
 
 	api := e.Group("/api")
@@ -95,5 +97,5 @@ func main() {
 	notificationService.StartEventStatusUpdater()
 	eventService.StartIndexUpdater()
 
-	e.Start(":3000")
+	e.Start(fmt.Sprintf(":%s", cfg.ServerPort))
 }

@@ -15,7 +15,7 @@ import { fonts } from "@/constants/fonts";
 import { colors } from "@/constants/colors";
 import * as Haptics from "expo-haptics";
 import CustomButton from "@/components/CustomButton";
-import { ADDRESS } from "@/constants/address";
+import { API_BASE_URL } from "@/constants/address";
 import { useEffect, useState } from "react";
 import { fetchWithToken } from "@/utils/tokenInterceptor";
 import { format, parseISO } from "date-fns";
@@ -99,7 +99,7 @@ const ModalScreen = () => {
     try {
       setIsLoading(true);
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/events/" + id,
+        API_BASE_URL + "/api/events/" + id,
         {
           method: "GET",
         },
@@ -133,7 +133,7 @@ const ModalScreen = () => {
   const JoinEvent = async (event_id: number) => {
     try {
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/events/" + event_id + "/join",
+        API_BASE_URL + "/api/events/" + event_id + "/join",
         {
           method: "POST",
         },
@@ -157,7 +157,7 @@ const ModalScreen = () => {
   const QuitEvent = async (event_id: number) => {
     try {
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/events/" + event_id + "/quit",
+        API_BASE_URL + "/api/events/" + event_id + "/quit",
         {
           method: "DELETE",
         },
@@ -212,7 +212,7 @@ const ModalScreen = () => {
   const DeleteEvent = async (event_id: number) => {
     try {
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/events/" + event_id + "/delete",
+        API_BASE_URL + "/api/events/" + event_id + "/delete",
         {
           method: "DELETE",
         },
@@ -239,7 +239,7 @@ const ModalScreen = () => {
 
     try {
       const response = (await fetchWithToken(
-        `http://${ADDRESS}/api/events/${eventId}/participants`,
+        `${API_BASE_URL}/api/events/${eventId}/participants`,
         { method: "GET" },
       )) as Response;
 
@@ -263,7 +263,7 @@ const ModalScreen = () => {
 
     try {
       const response = (await fetchWithToken(
-        `http://${ADDRESS}/api/users/${userId}`,
+        `${API_BASE_URL}/api/users/${userId}`,
         { method: "GET" },
       )) as Response;
 

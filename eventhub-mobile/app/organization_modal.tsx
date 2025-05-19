@@ -1,4 +1,4 @@
-import { ADDRESS } from "@/constants/address";
+import { API_BASE_URL } from "@/constants/address";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -72,7 +72,7 @@ const ModalScreen = () => {
   const LoadData = async () => {
     try {
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/organizations/" + id,
+        API_BASE_URL + "/api/organizations/" + id,
         {
           method: "GET",
         },
@@ -100,7 +100,7 @@ const ModalScreen = () => {
     setRefreshing(true);
     try {
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/organizations/" + id + "/events",
+        API_BASE_URL + "/api/organizations/" + id + "/events",
         {
           method: "GET",
         },
@@ -128,7 +128,7 @@ const ModalScreen = () => {
     setRefreshing(true);
     try {
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/organizations/" + id + "/members",
+        API_BASE_URL + "/api/organizations/" + id + "/members",
         {
           method: "GET",
         },

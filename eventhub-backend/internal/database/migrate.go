@@ -9,7 +9,10 @@ import (
 func MigrageDB(DB *gorm.DB) {
 	DB.AutoMigrate(
 		&repository.EventModel{},
+		&repository.EventParticipantModel{},
 		&repository.UserModel{},
 		&repository.OrganizationModel{},
+		&repository.OrganizationMemberModel{},
+		&repository.NotificationModel{},
 	)
 }

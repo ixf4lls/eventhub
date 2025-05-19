@@ -1,5 +1,5 @@
 import * as Haptics from "expo-haptics";
-import { ADDRESS } from "@/constants/address";
+import { API_BASE_URL } from "@/constants/address";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useCallback, useContext, useEffect, useState } from "react";
@@ -28,7 +28,7 @@ const Profile = () => {
   const LoadUserData = async () => {
     try {
       const response = (await fetchWithToken(
-        `http://${ADDRESS}/api/users/profile`,
+        `${API_BASE_URL}/api/users/profile`,
         { method: "GET" },
       )) as Response;
 

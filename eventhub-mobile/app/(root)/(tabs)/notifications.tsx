@@ -1,6 +1,6 @@
 import EmptyState from "@/components/EmptyState";
 import NotificationCard from "@/components/Notification";
-import { ADDRESS } from "@/constants/address";
+import { API_BASE_URL } from "@/constants/address";
 import { colors } from "@/constants/colors";
 import { fonts } from "@/constants/fonts";
 import { fetchWithToken } from "@/utils/tokenInterceptor";
@@ -39,7 +39,7 @@ const Notifications = () => {
       }
 
       const response = (await fetchWithToken(
-        "http://" + ADDRESS + "/api/notifications",
+        API_BASE_URL + "/api/notifications",
         {
           method: "GET",
         },

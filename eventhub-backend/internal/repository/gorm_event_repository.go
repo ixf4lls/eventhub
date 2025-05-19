@@ -95,7 +95,7 @@ func (r *GormEventRepository) GetUpcoming() ([]EventModel, error) {
 	limit := now.Add(48 * time.Hour)
 
 	if err := r.db.
-		Where("(date + start_time) BETWEEN ? AND ?", now, limit).
+		Where("(date + start_time::time) BETWEEN ? AND ?", now, limit).
 		Find(&events).Error; err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (r *GormEventRepository) GetUpcoming() ([]EventModel, error) {
 
 func (r *GormEventRepository) GetEventIDsToMarkCompleted() ([]EventModel, error) {
 	var events []EventModel
-	if err := r.db.Where("(date + start_time) <= ?", time.Now()).Where("status = ?", "active").Find(&events).Error; err != nil {
+	if err := r.db.Where("(date + start_time::time) <= ?", time.Now()).Where("status = ?", "active").Find(&events).Error; err != nil {
 		return nil, err
 	}
 

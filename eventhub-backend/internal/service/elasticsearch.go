@@ -25,7 +25,7 @@ type EventES struct {
 	CreatorID      uint   `json:"creator_id"`
 }
 
-func createEventDocInElastic(event *repository.EventModel) {
+func createEventDocInElastic(baseURL string, event *repository.EventModel) {
 	esDoc := EventES{
 		ID:             event.ID,
 		Title:          event.Title,
@@ -47,7 +47,7 @@ func createEventDocInElastic(event *repository.EventModel) {
 		return
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("http://localhost:9200/events/_doc/%d", event.ID), bytes.NewBuffer(body))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/events/_doc/%d", baseURL, event.ID), bytes.NewBuffer(body))
 	if err != nil {
 		log.Println("elasticsearch request error:", err)
 		return
